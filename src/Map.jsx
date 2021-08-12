@@ -51,20 +51,20 @@ function Map({ setTooltipContent, countries }) {
                     onMouseLeave={() => setTooltipContent("")}
                     fill={d ? colorScale(d["deathsPerM"]) : "#A5F4F6"}
                     stroke="#EAEAEC"
-                    // style={{
-                    //   default: {
-                    //     fill: "#D6D6DA",
-                    //     outline: "none",
-                    //   },
-                    //   hover: {
-                    //     fill: "#F53",
-                    //     outline: "none",
-                    //   },
-                    //   pressed: {
-                    //     fill: "#E42",
-                    //     outline: "none",
-                    //   },
-                    // }}
+                    style={{
+                      default: {
+                        // fill: "#D6D6DA",
+                        outline: "none",
+                      },
+                      hover: {
+                        // fill: "#F53",
+                        outline: "none",
+                      },
+                      pressed: {
+                        // fill: "#E42",
+                        outline: "none",
+                      },
+                    }}
                   />
                 );
               })
