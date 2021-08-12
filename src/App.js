@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import ReactTooltip from "react-tooltip";
 
 import { fetchCountries } from "./components/api/index";
-import {sortData} from "./util"
+import { sortData } from "./util";
 
 import "./App.css";
 import {
@@ -23,6 +24,8 @@ function App() {
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
 
+  const [tooltipContent, setTooltipContent] = useState("");
+
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
       .then((response) => response.json())
@@ -32,9 +35,18 @@ function App() {
   useEffect(() => {
     const fetchAPI = async () => {
       const data = await fetchCountries();
-      const sortedData = sortData(data)
-      setCountries(data.map(country => ({name: country.country, value: country.countryInfo.iso2})));
-      setTableData(sortedData)
+      const sortedData = sortData(data);
+      console.log(data);
+      setCountries(
+        data.map((country) => ({
+          name: country.country,
+          value: country.countryInfo.iso2,
+          casesPerM: country.casesPerOneMillion,
+          deathsPerM: country.deathsPerOneMillion,
+          recoveredPerM: country.recoveredPerOneMillion,
+        }))
+      );
+      setTableData(sortedData);
     };
 
     fetchAPI();
@@ -56,7 +68,6 @@ function App() {
         setCountryInfo(data);
       });
   };
-
 
   return (
     <div className="app">
@@ -97,13 +108,15 @@ function App() {
             total={countryInfo.deaths}
           />
         </div>
-
-        <Map />
+        
+          <Map setTooltipContent={setTooltipContent} countries={countries}/>
+          <ReactTooltip>{tooltipContent}</ReactTooltip>
+        
       </div>
       <Card className="app__right">
         <CardContent>
           <h3>Live Cases by Country</h3>
-          <Table countries={tableData}/>
+          <Table countries={tableData} />
           <h3>Worldwide new</h3>
           <LineGraph />
         </CardContent>
