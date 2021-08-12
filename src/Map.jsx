@@ -28,8 +28,8 @@ function Map({ setTooltipContent, countries }) {
     <div>
       <ComposableMap data-tip=""       projectionConfig={{
         // rotate: [33, 65, 0],
-        scale: 700,
-        center: [-97, 38]
+        // scale: 700,
+        // center: [-97, 38]
       }}>
         <ZoomableGroup>
           <Geographies geography={geoUrl}>
